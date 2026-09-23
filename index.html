@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo dos 7 Erros - Projeto Escolar</title>
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Jogo dos 7 Erros - Parquinho</h1>
+        <div class="placar">
+            <p>Erros Encontrados: <span id="contador">0</span>/7</p>
+        </div>
+    </header>
+
+    <main class="container-jogo">
+        <!-- Imagem Esquerda (Original) -->
+        <div class="caixa-imagem" id="caixa-esquerda">
+            <img src="Imagem/Esquerda.jpg" alt="Cena Original Esquerda" id="img-esquerda">
+            <!-- Os marcadores vermelhos/verdes dos erros encontrados vão ser criados via JavaScript aqui -->
+        </div>
+
+        <!-- Imagem Direita (Com alterações) -->
+        <div class="caixa-imagem" id="caixa-direita">
+            <img src="Imagem/Direita.jpg" alt="Cena com Erros Direita" id="img-direita">
+            <!-- Os marcadores vermelhos/verdes dos erros encontrados vão ser criados via JavaScript aqui -->
+        </div>
+    </main>
+
+    <!-- Script carregado no final do body -->
+    <script src="logica.js"></script>
+</body>
+</html>

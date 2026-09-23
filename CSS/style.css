@@ -1,0 +1,81 @@
+/* Reset básico para remover margens padrão */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f0f8ff;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.placar {
+    background-color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Alinha as duas imagens lado a lado */
+.container-jogo {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+}
+
+/* Caixa que segura cada imagem e os círculos dos erros */
+.caixa-imagem {
+    position: relative; /* Importante para posicionar os marcadores de erro */
+    cursor: pointer;
+    border: 4px solid #3498db;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.caixa-imagem img {
+    display: block;
+    width: 100%;
+    max-width: 550px; /* Garante que caibam duas imagens lado a lado */
+    height: auto;
+    user-select: none; /* Evita arrastar a imagem com o mouse */
+}
+
+/* Estilo do círculo que aparece quando acerta o erro */
+.marcador-erro {
+    position: absolute;
+    border: 3px solid #e74c3c;
+    background-color: rgba(231, 76, 60, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%); /* Centraliza o círculo no ponto exato */
+    pointer-events: none; /* Deixa o clique passar através do marcador */
+    animation: pulso 0.4s ease-out;
+}
+
+@keyframes pulso {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
