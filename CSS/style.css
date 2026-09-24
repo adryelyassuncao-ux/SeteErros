@@ -1,4 +1,3 @@
-/* Reset básico para remover margens padrão */
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +6,7 @@
 }
 
 body {
-    background-color: #f0f8ff;
+    background-color: #f0f2f5;
     color: #333;
     display: flex;
     flex-direction: column;
@@ -23,59 +22,183 @@ header {
 
 h1 {
     color: #2c3e50;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
-.placar {
+.painel-topo {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.placar, .cronometro {
     background-color: #ffffff;
     padding: 10px 20px;
     border-radius: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     font-size: 1.2rem;
     font-weight: bold;
+    color: #2c3e50;
 }
 
-/* Alinha as duas imagens lado a lado */
+.btn-dica {
+    background-color: #f39c12;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-dica:hover {
+    background-color: #d35400;
+    transform: scale(1.05);
+}
+
+.btn-dica:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Área das Imagens */
 .container-jogo {
     display: flex;
-    flex-direction: row;
     gap: 20px;
     justify-content: center;
-    align-items: center;
     max-width: 1200px;
     width: 100%;
 }
 
-/* Caixa que segura cada imagem e os círculos dos erros */
 .caixa-imagem {
-    position: relative; /* Importante para posicionar os marcadores de erro */
-    cursor: pointer;
-    border: 4px solid #3498db;
-    border-radius: 8px;
+    position: relative;
+    flex: 1;
+    max-width: 550px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    cursor: crosshair;
 }
 
 .caixa-imagem img {
-    display: block;
     width: 100%;
-    max-width: 550px; /* Garante que caibam duas imagens lado a lado */
     height: auto;
-    user-select: none; /* Evita arrastar a imagem com o mouse */
+    display: block;
+    user-select: none;
 }
 
-/* Estilo do círculo que aparece quando acerta o erro */
+/* Bolinha Vermelha do Erro Encontrado */
 .marcador-erro {
-    position: absolute;
     border: 3px solid #e74c3c;
-    background-color: rgba(231, 76, 60, 0.3);
     border-radius: 50%;
-    transform: translate(-50%, -50%); /* Centraliza o círculo no ponto exato */
-    pointer-events: none; /* Deixa o clique passar através do marcador */
-    animation: pulso 0.4s ease-out;
+    box-shadow: 0 0 10px rgba(231, 76, 60, 0.8), inset 0 0 10px rgba(231, 76, 60, 0.5);
+    animation: surgimento 0.3s ease-out;
 }
 
-@keyframes pulso {
-    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
-    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+@keyframes surgimento {
+    0% { transform: translate(-50%, -50%) scale(0); }
+    80% { transform: translate(-50%, -50%) scale(1.2); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Efeito Amarelo Piscante da Dica */
+.marcador-dica {
+    position: absolute;
+    border: 3px dashed #f1c40f;
+    background-color: rgba(241, 196, 15, 0.4);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: piscar 1s infinite alternate;
+}
+
+@keyframes piscar {
+    0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.6; }
+    100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+}
+
+/* Modal de Vitória */
+.modal-escondida {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.modal-escondida.ativa {
+    display: flex;
+}
+
+.modal-conteudo {
+    background: #ffffff;
+    padding: 30px 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    animation: popup 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    max-width: 90%;
+    width: 400px;
+}
+
+.modal-icone {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+}
+
+.modal-conteudo h2 {
+    color: #2c3e50;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.modal-conteudo p {
+    color: #555;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
+
+.btn-reiniciar {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(46, 204, 113, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-reiniciar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(46, 204, 113, 0.5);
+}
+
+#canvas-confetes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 99;
+}
+
+@keyframes popup {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
 }
