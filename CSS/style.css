@@ -1,3 +1,4 @@
+/* Reset Global */
 * {
     margin: 0;
     padding: 0;
@@ -15,6 +16,84 @@ body {
     padding: 20px;
 }
 
+/* Container Principal do Menu */
+.container-menu {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px 20px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Título e Subtítulo */
+.titulo-menu {
+    font-size: 2.2rem;
+    color: #2c3e50;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.subtitulo-menu {
+    font-size: 1rem;
+    color: #7f8c8d;
+    margin-bottom: 30px;
+}
+
+/* Grupo de Botões dos Níveis */
+.menu-niveis {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+/* Estilo Base dos Botões de Nível */
+.btn-nivel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-nivel:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.btn-nivel:active {
+    transform: translateY(0);
+}
+
+.btn-facil {
+    background-color: #2ecc71;
+}
+
+.btn-medio {
+    background-color: #f39c12;
+}
+
+.btn-dificil {
+    background-color: #e74c3c;
+}
+
+.badge-nivel {
+    font-size: 0.85rem;
+    background-color: rgba(255, 255, 255, 0.25);
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Cabeçalho do Jogo */
 header {
     text-align: center;
     margin-bottom: 20px;
@@ -67,12 +146,37 @@ h1 {
     transform: none;
 }
 
-/* Área das Imagens */
+.btn-voltar {
+    display: inline-flex;
+    position: absolute;
+    margin-left: 40%;
+    gap: 6px;
+    background-color: #3498db;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 10px 18px;
+    border-radius: 25px;
+    transition: all 0.2s ease;
+}
+
+/* Área Principal das Duplas */
 .container-jogo {
     display: flex;
-    gap: 20px;
-    justify-content: center;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    width: 100%;
     max-width: 1200px;
+}
+
+.dupla-jogo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
     width: 100%;
 }
 
@@ -93,11 +197,16 @@ h1 {
     user-select: none;
 }
 
-/* Bolinha Vermelha do Erro Encontrado */
+/* Marcadores dos Erros */
 .marcador-erro {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    transform: translate(-50%, -50%);
     border: 3px solid #e74c3c;
     border-radius: 50%;
     box-shadow: 0 0 10px rgba(231, 76, 60, 0.8), inset 0 0 10px rgba(231, 76, 60, 0.5);
+    pointer-events: none;
     animation: surgimento 0.3s ease-out;
 }
 
@@ -110,6 +219,8 @@ h1 {
 /* Efeito Amarelo Piscante da Dica */
 .marcador-dica {
     position: absolute;
+    width: 48px;
+    height: 48px;
     border: 3px dashed #f1c40f;
     background-color: rgba(241, 196, 15, 0.4);
     border-radius: 50%;

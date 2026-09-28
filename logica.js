@@ -1,190 +1,237 @@
-// 1. Mapeamento dos 7 Erros com as suas coordenadas exatas
-const listaDeErros = [
-    { id: 1, x: 29, y: 30, raio: 8, encontrado: false },
-    { id: 2, x: 53, y: 25, raio: 8, encontrado: false },
-    { id: 3, x: 77, y: 32, raio: 8, encontrado: false },
-    { id: 4, x: 92, y: 41, raio: 8, encontrado: false },
-    { id: 5, x: 14, y: 78, raio: 8, encontrado: false },
-    { id: 6, x: 96, y: 82, raio: 8, encontrado: false },
-    { id: 7, x: 71, y: 65, raio: 8, encontrado: false }
-];
+let faseAtual = 1;
 
-// Variáveis de controle
+const imagensDasFasesFaceis = {
+    1: { imagemA: "Imagem/Esquerda.jpeg", imagemB: "Imagem/Direita.jpeg" },
+    2: { imagemA: "Imagem/AmarelinhaEsquerda.jpeg", imagemB: "Imagem/AmarelinhaDireita.jpeg" },
+    3: { imagemA: "Imagem/PraiaEsquerda.jpeg", imagemB: "Imagem/DireitaPraia.jpeg" }
+};
+
+const fasesFaceis = {
+    
+    1:[
+
+        { id: 1, x: 29, y: 30, raio: 8, encontrado: false },
+        { id: 2, x: 53, y: 25, raio: 8, encontrado: false },
+        { id: 3, x: 77, y: 32, raio: 8, encontrado: false },
+        { id: 4, x: 92, y: 41, raio: 8, encontrado: false },
+        { id: 5, x: 14, y: 78, raio: 8, encontrado: false },
+        { id: 6, x: 96, y: 82, raio: 8, encontrado: false },
+        { id: 7, x: 71, y: 65, raio: 8, encontrado: false },
+      ],
+      
+       2:[ 
+       
+            {id:8,  x:36.2, y:33.7, raio: 8, encontrado: false},
+            {id:9,  x:64.8, y:34.4, raio: 8, encontrado: false},
+            {id:10, x:82.6, y:24.5, raio: 8, encontrado: false},
+            {id:11, x:78.3, y:91.4, raio: 8, encontrado: false},
+            {id:12, x:48.6, y:77.2, raio: 8, encontrado:false},
+            {id:13, x:12.3, y:54.2, raio: 8, encontrado:false},
+            {id:14, x:93.9, y:88.5, raio: 8, encontrado:false},
+       ],
+
+        3:[
+            {id:15, x:83.0, y:9.5,  raio: 8, encontrado:false},
+            {id:16, x:34.2, y:28.1, raio: 8, encontrado:false},
+            {id:17, x:14.7, y:21.7, raio: 8, encontrado:false},
+            {id:18, x:15.7, y:56.5, raio: 8, encontrado:false},
+            {id:19, x:91.6, y:90.4, raio: 8, encontrado:false},
+            {id:20, x:10.4, y:77.2, raio: 8, encontrado:false},
+            {id:21, x:11.9, y:39.7, raio: 8, encontrado:false},
+           
+    
+          ]                             
+};
+
+const imagensDasFasesMedias = {
+    1: {
+        imagemA: "Imagem/WhatsApp Image 2026-09-27 at 22.04.41.jpeg",
+        imagemB: "Imagem/WhatsApp Image 2026-09-27 at 22.04.42.jpeg"
+    },
+    2: {
+        imagemA: "Imagem/WhatsApp Image 2026-09-27 at 22.04.42 (1).jpeg",
+        imagemB: "Imagem/WhatsApp Image 2026-09-27 at 22.04.43.jpeg"
+    },
+    3: {
+        imagemA: "Imagem/WhatsApp Image 2026-09-27 at 22.24.23.jpeg",
+        imagemB: "Imagem/WhatsApp Image 2026-09-27 at 22.24.52.jpeg"
+    }
+};
+
+const fasesMedias = {
+    1: [
+        { id: 22, x: 13, y: 42, raio: 7, encontrado: false },
+        { id: 23, x: 72, y: 14, raio: 7, encontrado: false },
+        { id: 24, x: 12, y: 65, raio: 8, encontrado: false },
+        { id: 25, x: 59, y: 32, raio: 7, encontrado: false },
+        { id: 26, x: 96, y: 25, raio: 7, encontrado: false },
+        { id: 27, x: 83, y: 93, raio: 7, encontrado: false },
+        { id: 28, x: 82, y: 82, raio: 7, encontrado: false }
+    ],
+    2: [
+        { id: 29, x: 19, y: 35, raio: 8, encontrado: false },
+        { id: 30, x: 40, y: 34, raio: 8, encontrado: false },
+        { id: 31, x: 67, y: 49, raio: 8, encontrado: false },
+        { id: 32, x: 77, y: 83, raio: 8, encontrado: false },
+        { id: 33, x: 22, y: 73, raio: 8, encontrado: false },
+        { id: 34, x: 81, y: 72, raio: 8, encontrado: false },
+        { id: 35, x: 94, y: 94, raio: 8, encontrado: false }
+    ],
+    3: [
+        { id: 36, x: 42, y: 17, raio: 6, encontrado: false },
+        { id: 37, x: 46, y: 5, raio: 6, encontrado: false },
+        { id: 38, x: 40, y: 45, raio: 6, encontrado: false },
+        { id: 39, x: 38, y: 83, raio: 6, encontrado: false },
+        { id: 40, x: 52, y: 67, raio: 6, encontrado: false },
+        { id: 41, x: 73, y: 48, raio: 6, encontrado: false },
+        { id: 42, x: 91, y: 75, raio: 6, encontrado: false }
+    ]
+};
+
+const nivelAtual = typeof NIVEL_ATUAL === "undefined" ? "facil" : NIVEL_ATUAL;
+const imagensPorNivel = {
+    facil: imagensDasFasesFaceis,
+    medio: imagensDasFasesMedias
+};
+const fasesPorNivel = {
+    facil: fasesFaceis,
+    medio: fasesMedias
+};
+const nomesDosNiveis = {
+    facil: "Fácil",
+    medio: "Médio"
+};
+const imagensDasFases = imagensPorNivel[nivelAtual];
+const fases = fasesPorNivel[nivelAtual];
+const nomeDoNivel = nomesDosNiveis[nivelAtual];
+const totalDeFases = Object.keys(imagensDasFases).length;
 let errosEncontrados = 0;
-const totalErros = listaDeErros.length;
 let dicasRestantes = 3;
-let segundosDecorridos = 0;
-let temporizador = null;
+let temporizadorDica;
 
-// Elementos da tela
-const caixaEsquerda = document.getElementById("caixa-esquerda");
-const caixaDireita = document.getElementById("caixa-direita");
-const elementoContador = document.getElementById("contador");
-const elementoTempo = document.getElementById("tempo");
-const elementoQtdDicas = document.getElementById("qtd-dicas");
-const btnDica = document.getElementById("btn-dica");
-
-// Inicia o cronômetro assim que a página carrega
-iniciarCronometro();
-
-if (caixaEsquerda && caixaDireita) {
-    caixaEsquerda.addEventListener("click", verificarClique);
-    caixaDireita.addEventListener("click", verificarClique);
-}
-
-// Função do Cronômetro
-function iniciarCronometro() {
-    temporizador = setInterval(() => {
-        segundosDecorridos++;
-        const mins = String(Math.floor(segundosDecorridos / 60)).padStart(2, '0');
-        const segs = String(segundosDecorridos % 60).padStart(2, '0');
-        if (elementoTempo) {
-            elementoTempo.textContent = `${mins}:${segs}`;
-        }
-    }, 1000);
-}
-
-// Função executada ao clicar na imagem
-function verificarClique(evento) {
-    const caixaClicada = evento.currentTarget;
-    const retangulo = caixaClicada.getBoundingClientRect();
-
-    const cliqueX = ((evento.clientX - retangulo.left) / retangulo.width) * 100;
-    const cliqueY = ((evento.clientY - retangulo.top) / retangulo.height) * 100;
-
-    let erroAcertado = null;
-
-    for (let erro of listaDeErros) {
-        if (erro.encontrado) continue;
-
-        const distanciaX = cliqueX - erro.x;
-        const distanciaY = cliqueY - erro.y;
-        const distancia = Math.sqrt(distanciaX * distanciaX + distanciaY * distanciaY);
-
-        if (distancia <= erro.raio) {
-            erroAcertado = erro;
-            break;
-        }
-    }
-
-    if (erroAcertado) {
-        erroAcertado.encontrado = true;
-        errosEncontrados++;
-
-        // Remove o efeito da dica se o jogador acertar
-        removerIndicadoresDica();
-
-        if (elementoContador) {
-            elementoContador.textContent = errosEncontrados;
-        }
-
-        desenharMarcador(erroAcertado.x, erroAcertado.y);
-
-        if (errosEncontrados === totalErros) {
-            clearInterval(temporizador); // Para o cronômetro na vitória
-            setTimeout(() => {
-                mostrarVitoria();
-            }, 300);
-        }
-    }
-}
-
-// Função do Botão de Dica
-function usarDica() {
-    if (dicasRestantes <= 0) return;
-
-    // Encontra o primeiro erro que ainda não foi descoberto
-    const erroNaoEncontrado = listaDeErros.find(e => !e.encontrado);
-
-    if (erroNaoEncontrado) {
-        dicasRestantes--;
-        if (elementoQtdDicas) elementoQtdDicas.textContent = dicasRestantes;
-
-        if (dicasRestantes === 0 && btnDica) {
-            btnDica.disabled = true;
-        }
-
-        destacarDica(erroNaoEncontrado.x, erroNaoEncontrado.y);
-    }
-}
-
-function destacarDica(xPercent, yPercent) {
-    removerIndicadoresDica();
-
-    [caixaEsquerda, caixaDireita].forEach(caixa => {
-        if (!caixa) return;
-        const dicaDiv = document.createElement("div");
-        dicaDiv.className = "marcador-dica";
-        dicaDiv.style.left = `${xPercent}%`;
-        dicaDiv.style.top = `${yPercent}%`;
-        dicaDiv.style.width = "60px";
-        dicaDiv.style.height = "60px";
-        
-        caixa.appendChild(dicaDiv);
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".caixa-imagem").forEach(caixa => {
+        caixa.addEventListener("click", verificarClique);
     });
+    atualizarBotaoDica();
+});
+
+function verificarClique(evento) {
+    const caixa = evento.currentTarget;
+    const limites = caixa.getBoundingClientRect();
+    const posicaoX = ((evento.clientX - limites.left) / limites.width) * 100;
+    const posicaoY = ((evento.clientY - limites.top) / limites.height) * 100;
+    const errosDaFase = fases[faseAtual];
+
+    for (let erro of errosDaFase) {
+        if (!erro.encontrado) {
+            const dist = Math.hypot(posicaoX - erro.x, posicaoY - erro.y);
+
+            if (dist <= erro.raio) {
+                erro.encontrado = true;
+                errosEncontrados++;
+                desenharMarcador(caixa, erro.x, erro.y);
+                limparMarcadoresDica();
+                atualizarPlacar();
+
+                if (errosEncontrados === fases[faseAtual].length) {
+                    mostrarConclusaoDaFase();
+                }
+                break;
+            }
+        }
+    }
 }
 
-function removerIndicadoresDica() {
-    const dicas = document.querySelectorAll(".marcador-dica");
-    dicas.forEach(d => d.remove());
-}
+function usarDica() {
+    if (dicasRestantes <= 0) {
+        return;
+    }
 
-// Desenha a bolinha vermelha em ambas as imagens
-function desenharMarcador(xPercent, yPercent) {
-    [caixaEsquerda, caixaDireita].forEach(caixa => {
-        if (!caixa) return;
+    const erro = fases[faseAtual].find(item => !item.encontrado);
+    if (!erro) {
+        return;
+    }
+
+    limparMarcadoresDica();
+    dicasRestantes--;
+    atualizarBotaoDica();
+
+    document.querySelectorAll(".caixa-imagem").forEach(caixa => {
         const marcador = document.createElement("div");
-        marcador.className = "marcador-erro";
-        
-        marcador.style.position = "absolute";
-        marcador.style.left = `${xPercent}%`;
-        marcador.style.top = `${yPercent}%`;
-        marcador.style.width = "40px";
-        marcador.style.height = "40px";
-        marcador.style.transform = "translate(-50%, -50%)";
-        marcador.style.pointerEvents = "none";
-        
+        marcador.className = "marcador-dica";
+        marcador.style.left = `${erro.x}%`;
+        marcador.style.top = `${erro.y}%`;
         caixa.appendChild(marcador);
     });
+
+    temporizadorDica = window.setTimeout(limparMarcadoresDica, 2500);
 }
 
-// Exibe a tela de Parabéns
-function mostrarVitoria() {
+function atualizarBotaoDica() {
+    const quantidade = document.getElementById("qtd-dicas");
+    const botao = document.getElementById("btn-dica");
+    quantidade.textContent = dicasRestantes;
+    botao.disabled = dicasRestantes === 0;
+}
+
+function limparMarcadoresDica() {
+    window.clearTimeout(temporizadorDica);
+    document.querySelectorAll(".marcador-dica").forEach(marcador => marcador.remove());
+}
+
+function desenharMarcador(caixa, xPercent, yPercent) {
+    const marcador = document.createElement("div");
+    marcador.className = "marcador-erro";
+    marcador.style.left = `${xPercent}%`;
+    marcador.style.top = `${yPercent}%`;
+    caixa.appendChild(marcador);
+}
+
+function mostrarConclusaoDaFase() {
     const modal = document.getElementById("modal-vitoria");
-    if (modal) modal.classList.add("ativa");
-    dispararConfetes();
-}
+    const titulo = document.getElementById("modal-titulo");
+    const texto = document.getElementById("modal-texto");
+    const botao = document.getElementById("btn-proxima-fase");
 
-function reiniciarJogo() {
-    location.reload();
-}
-
-// Animação de confetes
-function dispararConfetes() {
-    const canvas = document.getElementById("canvas-confetes");
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const confetes = Array.from({ length: 90 }).map(() => ({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height - canvas.height,
-        cor: `hsl(${Math.random() * 360}, 80%, 60%)`,
-        tamanho: Math.random() * 8 + 4,
-        velocidadeY: Math.random() * 3 + 2,
-        velocidadeX: Math.random() * 2 - 1
-    }));
-
-    function animar() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        confetes.forEach(p => {
-            p.y += p.velocidadeY;
-            p.x += p.velocidadeX;
-            ctx.fillStyle = p.cor;
-            ctx.fillRect(p.x, p.y, p.tamanho, p.tamanho);
-        });
-        requestAnimationFrame(animar);
+    if (faseAtual === totalDeFases) {
+        titulo.textContent = "Parabéns!";
+        texto.textContent = `Você encontrou os 7 erros de todas as ${totalDeFases} fases!`;
+        botao.textContent = "Voltar ao menu";
+    } else {
+        titulo.textContent = `Fase ${faseAtual} concluída!`;
+        texto.textContent = "Você encontrou todos os 7 erros.";
+        botao.textContent = "Próxima fase ➡️";
     }
-    animar();
+
+    modal.classList.add("ativa");
+}
+
+function proximaFase() {
+    if (faseAtual === totalDeFases) {
+        window.location.href = "index.html";
+        return;
+    }
+
+    faseAtual++;
+    limparMarcadores();
+    limparMarcadoresDica();
+
+    const imagens = imagensDasFases[faseAtual];
+    document.getElementById("imagemA").src = imagens.imagemA;
+    document.getElementById("imagemB").src = imagens.imagemB;
+    document.getElementById("titulo-fase").textContent = `Nível ${nomeDoNivel} (Fase ${faseAtual}/${totalDeFases})`;
+    document.getElementById("modal-vitoria").classList.remove("ativa");
+
+    errosEncontrados = 0;
+    atualizarPlacar();
+}
+
+function limparMarcadores() {
+    document.querySelectorAll(".marcador-erro").forEach(marcador => marcador.remove());
+}
+
+function atualizarPlacar() {
+    const elementoContador = document.getElementById("contador");
+    elementoContador.textContent = errosEncontrados;
 }
