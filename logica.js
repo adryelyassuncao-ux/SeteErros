@@ -69,13 +69,13 @@ const fasesMedias = {
         { id: 28, x: 82, y: 82, raio: 7, encontrado: false }
     ],
     2: [
-        { id: 29, x: 19, y: 35, raio: 8, encontrado: false },
-        { id: 30, x: 40, y: 34, raio: 8, encontrado: false },
-        { id: 31, x: 67, y: 49, raio: 8, encontrado: false },
-        { id: 32, x: 77, y: 83, raio: 8, encontrado: false },
-        { id: 33, x: 22, y: 73, raio: 8, encontrado: false },
-        { id: 34, x: 81, y: 72, raio: 8, encontrado: false },
-        { id: 35, x: 94, y: 94, raio: 8, encontrado: false }
+        { id: 29, x: 23, y: 5, xImagemB: 18, yImagemB: 4, raio: 6, encontrado: false },
+        { id: 30, x: 20, y: 50, xImagemB: 22, yImagemB: 47, raio: 6, encontrado: false },
+        { id: 31, x: 20, y: 63, xImagemB: 22, yImagemB: 63, raio: 6, encontrado: false },
+        { id: 32, x: 59, y: 53, xImagemB: 59, yImagemB: 51, raio: 6, encontrado: false },
+        { id: 33, x: 85, y: 48, xImagemB: 86, yImagemB: 48, raio: 6, encontrado: false },
+        { id: 34, x: 35, y: 82, xImagemB: 33, yImagemB: 78, raio: 6, encontrado: false },
+        { id: 35, x: 81, y: 87, xImagemB: 77, yImagemB: 84, raio: 6, encontrado: false }
     ],
     3: [
         { id: 36, x: 42, y: 17, raio: 6, encontrado: false },
@@ -107,7 +107,6 @@ const nomeDoNivel = nomesDosNiveis[nivelAtual];
 const totalDeFases = Object.keys(imagensDasFases).length;
 let errosEncontrados = 0;
 let dicasRestantes = 3;
-let temporizadorDica;
 
 document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".caixa-imagem").forEach(caixa => {
@@ -118,19 +117,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function verificarClique(evento) {
     const caixa = evento.currentTarget;
-    const limites = caixa.getBoundingClientRect();
+    const imagem = caixa.querySelector("img");
+    const limites = imagem.getBoundingClientRect();
     const posicaoX = ((evento.clientX - limites.left) / limites.width) * 100;
     const posicaoY = ((evento.clientY - limites.top) / limites.height) * 100;
     const errosDaFase = fases[faseAtual];
 
     for (let erro of errosDaFase) {
         if (!erro.encontrado) {
-            const dist = Math.hypot(posicaoX - erro.x, posicaoY - erro.y);
+            const posicaoErro = obterCoordenadasErro(erro, caixa);
+            const dist = Math.hypot(posicaoX - posicaoErro.x, posicaoY - posicaoErro.y);
 
             if (dist <= erro.raio) {
                 erro.encontrado = true;
                 errosEncontrados++;
-                desenharMarcador(caixa, erro.x, erro.y);
+                const posicaoMarcador = converterPosicaoParaCaixa(caixa, posicaoErro);
+                desenharMarcador(caixa, posicaoMarcador.x, posicaoMarcador.y);
                 limparMarcadoresDica();
                 atualizarPlacar();
 
@@ -158,14 +160,14 @@ function usarDica() {
     atualizarBotaoDica();
 
     document.querySelectorAll(".caixa-imagem").forEach(caixa => {
+        const posicaoErro = obterCoordenadasErro(erro, caixa);
+        const posicaoMarcador = converterPosicaoParaCaixa(caixa, posicaoErro);
         const marcador = document.createElement("div");
         marcador.className = "marcador-dica";
-        marcador.style.left = `${erro.x}%`;
-        marcador.style.top = `${erro.y}%`;
+        marcador.style.left = `${posicaoMarcador.x}%`;
+        marcador.style.top = `${posicaoMarcador.y}%`;
         caixa.appendChild(marcador);
     });
-
-    temporizadorDica = window.setTimeout(limparMarcadoresDica, 2500);
 }
 
 function atualizarBotaoDica() {
@@ -176,8 +178,26 @@ function atualizarBotaoDica() {
 }
 
 function limparMarcadoresDica() {
-    window.clearTimeout(temporizadorDica);
     document.querySelectorAll(".marcador-dica").forEach(marcador => marcador.remove());
+}
+
+function obterCoordenadasErro(erro, caixa) {
+    if (caixa.querySelector("#imagemB") && erro.xImagemB !== undefined && erro.yImagemB !== undefined) {
+        return { x: erro.xImagemB, y: erro.yImagemB };
+    }
+
+    return { x: erro.x, y: erro.y };
+}
+
+function converterPosicaoParaCaixa(caixa, posicao) {
+    const imagem = caixa.querySelector("img");
+    const limitesImagem = imagem.getBoundingClientRect();
+    const limitesCaixa = caixa.getBoundingClientRect();
+
+    return {
+        x: ((limitesImagem.left - limitesCaixa.left + (posicao.x / 100) * limitesImagem.width) / limitesCaixa.width) * 100,
+        y: ((limitesImagem.top - limitesCaixa.top + (posicao.y / 100) * limitesImagem.height) / limitesCaixa.height) * 100
+    };
 }
 
 function desenharMarcador(caixa, xPercent, yPercent) {
