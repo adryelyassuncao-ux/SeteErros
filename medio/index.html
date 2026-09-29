@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nível Médio - Jogo dos 7 Erros</title>
+    <link rel="stylesheet" href="../CSS/style.css">
+</head>
+<body>
+
+    <header>
+        <a href="../index.html" class="btn-voltar">⬅️ Menu</a>
+        <h1 id="titulo-fase">Nível Médio (Fase 1/3)</h1>
+        <div class="painel-topo">
+            <div class="placar">
+                <p>Erros: <span id="contador">0</span>/7</p>
+            </div>
+            <div class="cronometro">
+                <p>⏱️ <span id="tempo">00:00</span></p>
+            </div>
+            <button id="btn-dica" onclick="usarDica()" class="btn-dica">💡 Dica (<span id="qtd-dicas">3</span>)</button>
+        </div>
+    </header>
+
+    <main class="container-jogo">
+        <div class="dupla-jogo">
+            <div class="caixa-imagem">
+                <img id="imagemA" src="Imagem/voleie.jpg" alt="Imagem da fase atual">
+            </div>
+            <div class="caixa-imagem">
+                <img id="imagemB" src="Imagem/voleidir.jpg" alt="Imagem da fase atual com erros">
+            </div>
+        </div>
+    </main>
+    <div id="modal-vitoria" class="modal-escondida">
+        <div class="modal-conteudo">
+            <div class="modal-icone">🎉</div>
+            <h2 id="modal-titulo">Fase Concluída!</h2>
+            <p id="modal-texto">Você encontrou todos os erros!</p>
+            <button id="btn-proxima-fase" onclick="proximaFase()" class="btn-reiniciar">Próxima Fase ➡️</button>
+        </div>
+    </div>
+
+    <canvas id="canvas-confetes"></canvas>
+
+    <script>
+        const NIVEL_ATUAL = "medio";
+    </script>
+    <script src="logica.js"></script>
+</body>
+</html>
